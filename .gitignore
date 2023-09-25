@@ -1,4 +1,5 @@
-/dist/
-/target/
-/Cargo.lock
+dist
+pkg
+target
+Cargo.lock
 styles/output.css

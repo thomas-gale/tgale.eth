@@ -1,46 +1,42 @@
-// use yew::prelude::*;
-
-// use super::feed;
-// use super::footer;
-// use super::side_bar;
-
-// #[function_component(App)]
-// pub fn app() -> Html {
-//     html! {
-//         <main>
-//             <div class="flex flex-col h-full">
-//                 <div class="flex flow-row flex-wrap ju h-full">
-//                     <side_bar::SideBar/>
-//                     <feed::Feed/>
-//                 </div>
-//                 <footer::Footer/>
-//             </div>
-//         </main>
-//     }
-// }
-
 use leptos::*;
+use leptos_meta::*;
+use leptos_router::*;
 
 #[component]
 pub fn App() -> impl IntoView {
-    let (count, set_count) = create_signal(0);
-    let double_count = move || count() * 2;
-
+    provide_meta_context();
     view! {
-      <div class="flex flex-col h-full">
-        <button
-            on:click=move |_| {
-                set_count.update(|c| *c += 1)
-            }
-            class="btn btn-primary rounded m-4"
-            class=("bg-blue-500", move || double_count() <= 5)
-            class=("bg-red-500", move || double_count() > 5)
-        >
-            "Click me: "
-            {count}
-            " double: "
-            {double_count}
-        </button>
-      </div>
+        <Stylesheet id="leptos" href="/pkg/tailwind.css"/>
+        <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
+        <Router>
+            <Routes>
+                <Route path="" view=  move || view! { <Home/> }/>
+            </Routes>
+        </Router>
+    }
+}
+
+#[component]
+fn Home() -> impl IntoView {
+    let (value, set_value) = create_signal(0);
+
+    // thanks to https://tailwindcomponents.com/component/blue-buttons-example for the showcase layout
+    view! {
+        <Title text="Leptos + Tailwindcss"/>
+        <main>
+            <div class="bg-gradient-to-tl from-blue-800 to-blue-500 text-white font-mono flex flex-col min-h-screen">
+                <div class="flex flex-row-reverse flex-wrap m-auto">
+                    <button on:click=move |_| set_value.update(|value| *value += 1) class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800 text-white">
+                        "+"
+                    </button>
+                    <button class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-800 border-blue-900 text-white">
+                        {value}
+                    </button>
+                    <button on:click=move |_| set_value.update(|value| *value -= 1) class="rounded px-3 py-2 m-1 border-b-4 border-l-2 shadow-lg bg-blue-700 border-blue-800 text-white">
+                        "-"
+                    </button>
+                </div>
+            </div>
+        </main>
     }
 }
