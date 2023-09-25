@@ -24,15 +24,23 @@ use leptos::*;
 #[component]
 pub fn App() -> impl IntoView {
     let (count, set_count) = create_signal(0);
+    let double_count = move || count() * 2;
 
     view! {
+      <div class="flex flex-col h-full">
         <button
             on:click=move |_| {
-                set_count(3);
+                set_count.update(|c| *c += 1)
             }
+            class="btn btn-primary rounded m-4"
+            class=("bg-blue-500", move || double_count() <= 5)
+            class=("bg-red-500", move || double_count() > 5)
         >
             "Click me: "
-            {move || count()}
+            {count}
+            " double: "
+            {double_count}
         </button>
+      </div>
     }
 }
