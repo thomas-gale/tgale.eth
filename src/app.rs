@@ -6,7 +6,7 @@ use leptos_router::*;
 pub fn App() -> impl IntoView {
     provide_meta_context();
     view! {
-        <Stylesheet id="leptos" href="/pkg/tailwind.css"/>
+        <Stylesheet id="leptos" href="/pkg/thomas-gale.css"/>
         <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
         <Router>
             <Routes>
